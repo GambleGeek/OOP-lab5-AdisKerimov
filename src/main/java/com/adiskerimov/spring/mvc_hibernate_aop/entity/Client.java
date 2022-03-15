@@ -1,9 +1,9 @@
 package com.adiskerimov.spring.mvc_hibernate_aop.entity;
 
 import javax.persistence.*;
-import javax.validation.constraints.NotBlank;
 import javax.validation.constraints.NotEmpty;
 import javax.validation.constraints.Size;
+import java.util.List;
 
 @Entity
 @Table(name = "client")
@@ -28,6 +28,10 @@ public class Client {
     @NotEmpty(message="Name should not be empty")
     @Size(min = 5, message = "Size should be greater than 5 symbols")
     private String address;
+
+    @OneToMany(cascade = {CascadeType.MERGE, CascadeType.PERSIST, CascadeType.DETACH, CascadeType.REFRESH},
+            mappedBy = "client")
+    private List<Contract> contracts;
 
     public Client() {
     }

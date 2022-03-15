@@ -1,7 +1,8 @@
 package com.adiskerimov.spring.mvc_hibernate_aop.controller;
 
 import com.adiskerimov.spring.mvc_hibernate_aop.entity.Client;
-import com.adiskerimov.spring.mvc_hibernate_aop.service.ClientService;
+import com.adiskerimov.spring.mvc_hibernate_aop.entity.Employee;
+import com.adiskerimov.spring.mvc_hibernate_aop.service.ServiceI;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
@@ -16,12 +17,12 @@ import java.util.List;
 public class MyController {
 
     @Autowired
-    private ClientService clientService;
+    private ServiceI serviceI;
 
-    @RequestMapping("/")
+    @RequestMapping("/clientList")
     public String showAllClients(Model model){
 
-        List<Client> allClients = clientService.getAllClients();
+        List<Client> allClients = serviceI.getAllClients();
         model.addAttribute("allClients", allClients);
 
         return "all-clients";
@@ -36,6 +37,7 @@ public class MyController {
         return "client-info";
     }
 
+
     @RequestMapping("/saveClient")
     public String saveClient(@ModelAttribute("newClient")
                              @Valid final Client client,
@@ -43,7 +45,25 @@ public class MyController {
         if(bindingResult.hasFieldErrors()){
             return "client-info";
         }
-        clientService.saveClient(client);
+        serviceI.saveClient(client);
         return "redirect:/";
+    }
+
+    @RequestMapping("/employeeList")
+    public String showAllEmployees(Model model){
+
+        List<Employee> allEmployees = serviceI.getAllEmployees();
+        model.addAttribute("allEmployees", allEmployees);
+
+        return "all-employees";
+    }
+
+    @RequestMapping("/addNewEmployee")
+    public String addNewEmployee(Model model){
+
+        Employee employee = new Employee();
+        model.addAttribute("newEmployee", employee);
+
+        return "employee-info";
     }
 }

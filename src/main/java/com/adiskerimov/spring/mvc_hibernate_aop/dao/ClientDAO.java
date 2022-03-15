@@ -1,7 +1,6 @@
 package com.adiskerimov.spring.mvc_hibernate_aop.dao;
 
 import com.adiskerimov.spring.mvc_hibernate_aop.entity.Client;
-import org.springframework.stereotype.Repository;
 
 import java.util.List;
 
